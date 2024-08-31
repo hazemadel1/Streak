@@ -1,7 +1,7 @@
 package com.example.Streak.Service;
 
-import com.example.Streak.Data.History;
-import com.example.Streak.Data.HistoryRepository;
+import com.example.Streak.Data.History.History;
+import com.example.Streak.Data.History.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -12,8 +12,8 @@ public class StreakController {
     private StreakService streakService;
 
     @GetMapping ("/update")
-    public ResponseEntity<String> updateDailyUsage(@RequestParam("msisdn") String msisdn, @RequestParam("dataUsed") Long dataUsed, @RequestParam("segmentId") Long segmentId) {
-        String result = streakService.updateDailyUsage(msisdn, dataUsed, segmentId);
+    public ResponseEntity<String> updateDailyUsage(@RequestParam("msisdn") String msisdn, @RequestParam("dataUsed") Long dataUsed) {
+        String result = streakService.updateDailyUsage(msisdn, dataUsed);
 
         switch (result) {
             case "STREAK_ONGOING":

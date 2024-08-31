@@ -1,4 +1,4 @@
-package com.example.Streak.Data;
+package com.example.Streak.Data.History;
 
 import org.springframework.data.repository.CrudRepository;
 

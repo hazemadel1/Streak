@@ -1,4 +1,4 @@
-package com.example.Streak.Data;
+package com.example.Streak.Data.Reward;
 
 import org.springframework.data.annotation.Id;
 

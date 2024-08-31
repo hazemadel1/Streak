@@ -1,7 +1,7 @@
 package com.example.Streak.Service;
 
-import com.example.Streak.Data.DailyUsage;
-import com.example.Streak.Data.DailyUsageRepository;
+import com.example.Streak.Data.DailyUsage.DailyUsage;
+import com.example.Streak.Data.DailyUsage.DailyUsageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

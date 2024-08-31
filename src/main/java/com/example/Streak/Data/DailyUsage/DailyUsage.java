@@ -1,7 +1,6 @@
-package com.example.Streak.Data;
+package com.example.Streak.Data.DailyUsage;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 

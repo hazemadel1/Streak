@@ -1,4 +1,4 @@
-package com.example.Streak.Data;
+package com.example.Streak.Data.Streak;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

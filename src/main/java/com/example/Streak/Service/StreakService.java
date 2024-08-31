@@ -1,6 +1,12 @@
 package com.example.Streak.Service;
 
-import com.example.Streak.Data.*;
+import com.example.Streak.Data.History.History;
+import com.example.Streak.Data.Reward.Reward;
+import com.example.Streak.Data.Reward.RewardRepository;
+import com.example.Streak.Data.SegmentConfiguration.SegmentConfiguration;
+
+import com.example.Streak.Data.Streak.Streak;
+import com.example.Streak.Data.Streak.StreakRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -9,26 +15,28 @@ import java.util.Optional;
 @Service
 public class StreakService {
 
-    private final SegmentService segmentService;
+    private final SegmentConfigurationService segmentConfigurationService;
     private final DailyUsageService dailyUsageService;
     private final StreakRepository streakRepository;
     private final RewardRepository rewardRepository;
     private final HistoryService historyService;
-    private  final SegmentRepository segmentRepository;
+    private final SegmentationService segmentationService;
 
-    public StreakService(SegmentService segmentService, DailyUsageService dailyUsageService, StreakRepository streakRepository, RewardRepository rewardRepository, HistoryService historyService, SegmentRepository segmentRepository) {
-        this.segmentService = segmentService;
+
+    public StreakService(SegmentConfigurationService segmentConfigurationService, DailyUsageService dailyUsageService, StreakRepository streakRepository, RewardRepository rewardRepository, HistoryService historyService, SegmentationService segmentationService) {
+        this.segmentConfigurationService = segmentConfigurationService;
         this.dailyUsageService = dailyUsageService;
         this.streakRepository = streakRepository;
         this.rewardRepository = rewardRepository;
         this.historyService = historyService;
-        this.segmentRepository = segmentRepository;
+        this.segmentationService = segmentationService;
     }
 
-    public String updateDailyUsage(String msisdn, Long dataUsed, Long segmentId) {
+    public String updateDailyUsage(String msisdn, Long dataUsed) {
         LocalDate today = LocalDate.now();
-        Optional<Segment> segment = segmentRepository.findById(segmentId);
-        Long minDataUsage = segment.get().limitation();
+        Long segmentId = segmentationService.getSegmentIdByMsisdn(msisdn);
+        SegmentConfiguration segmentConfiguration = segmentConfigurationService.getSegmentLimitation(segmentId);
+        Long minDataUsage = segmentConfiguration.limitation();
 
         // Record daily usage
         dailyUsageService.recordDailyUsage(msisdn, today, dataUsed);
@@ -64,7 +72,7 @@ public class StreakService {
     }
 
     private void grantRewardIfEligible(Streak streak) {
-        Optional<Reward> reward = rewardRepository.finddbyCurrentStreak(streak.currentStreak());
+        Optional<Reward> reward = rewardRepository.findByCurrentStreak(streak.currentStreak());
         if (reward.isPresent()) {
             History history = new History(null, streak.msisdn(), streak.currentStreak(), reward.get().data());
             historyService.saveStreakHistory(history);
